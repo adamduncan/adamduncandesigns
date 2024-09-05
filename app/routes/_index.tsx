@@ -2,8 +2,8 @@ import { json } from "@remix-run/node";
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-// import albums from "~/data/albums.json";
-// import gigs from "~/data/gigs.json";
+import albums from "~/data/albums.json";
+import gigs from "~/data/gigs.json";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,7 +16,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  return json({ albums: [], gigs: [] });
+  return json({ albums, gigs });
 };
 
 export default function Index() {
