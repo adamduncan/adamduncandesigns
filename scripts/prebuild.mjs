@@ -2,6 +2,7 @@
 
 import fs from "node:fs";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import "dotenv/config";
 
 async function prebuild() {
   try {

@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "prebuild": "node --env-file=.env ./scripts/prebuild.mjs",
+    "prebuild": "node ./scripts/prebuild.mjs",
     "build": "remix vite:build",
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
@@ -19,6 +19,7 @@
     "@remix-run/react": "^2.11.2",
     "@remix-run/serve": "^2.11.2",
     "@spotify/web-api-ts-sdk": "^1.2.0",
+    "dotenv": "^16.4.5",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
