@@ -2,10 +2,11 @@ import {
   Links,
   Meta,
   Outlet,
-  Scripts,
-  ScrollRestoration,
+  // Scripts,
+  // ScrollRestoration,
 } from "@remix-run/react";
-import "./tailwind.css";
+
+import "./index.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -18,8 +19,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <ScrollRestoration />
-        <Scripts />
+        {/* <ScrollRestoration /> */}
+        {/* <Scripts /> */}
       </body>
     </html>
   );
