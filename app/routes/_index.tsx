@@ -232,8 +232,8 @@ export default function Index() {
               <a href="https://github.com/adamduncan/eleventy-plugin-i18n">
                 eleventy-plugin-i18n
               </a>{" "}
-              &mdash; Alley-oop for Eleventy internationalization and dictionary
-              translations.
+              (2020) &mdash; Alley-oop for Eleventy internationalization and
+              dictionary translations.
             </li>
             <li>
               <a href="https://github.com/frend/frend.co">Frend.co</a> (2016)
