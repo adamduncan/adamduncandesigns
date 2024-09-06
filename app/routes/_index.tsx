@@ -63,12 +63,12 @@ export default function Index() {
                   height={book.image.height}
                   width={book.image.width}
                 />
-                <div>{book.author}</div>
                 <div>
                   <a href={`https://hardcover.app/books/${book.slug}`}>
                     {book.title}
                   </a>
                 </div>
+                <div>{book.author}</div>
               </div>
             );
           })}
@@ -84,8 +84,8 @@ export default function Index() {
                 <img
                   src={album.image.url}
                   alt={album.name}
-                  height={album.image.height}
-                  width={album.image.width}
+                  height={album.image.width}
+                  width={album.image.height}
                 />
                 <div>{album.artist}</div>
                 <div>
