@@ -34,13 +34,12 @@ export default function Index() {
           {links.slice(0, 5).map((link) => {
             return (
               <div key={link.id}>
-                {/* TODO: Favicon? */}
-                {/* <img
-                  src={link.image.url}
-                  alt={link.artist}
-                  height={link.image.height}
-                  width={link.image.width}
-                /> */}
+                <img
+                  src={`https://icon.horse/icon/${link.hostname}`}
+                  alt=""
+                  height={100}
+                  width={100}
+                />
                 <div>
                   <a href={link.url}>{link.title}</a>
                 </div>
