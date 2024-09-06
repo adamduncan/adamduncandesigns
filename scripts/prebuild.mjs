@@ -2,6 +2,8 @@
 
 import fs from "node:fs";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import Instapaper from "instapaper-node-sdk";
+
 import "dotenv/config";
 
 async function prebuild() {
@@ -10,13 +12,15 @@ async function prebuild() {
     const spotifyToken = await getSpotifyAccessToken();
     const spotifySdk = SpotifyApi.withAccessToken("client-id", spotifyToken);
 
-    const [albums, gigs] = await Promise.all([
+    const [albums, gigs, readingList] = await Promise.all([
       getAlbums(spotifySdk),
       getGigs(spotifySdk),
+      getReadingList(),
     ]);
 
     writeDataFile("albums", JSON.stringify(albums));
     writeDataFile("gigs", JSON.stringify(gigs));
+    writeDataFile("links", JSON.stringify(readingList));
   } catch (error) {
     console.log(error);
   }
@@ -63,6 +67,7 @@ async function getAlbums(sdk) {
     return Object.values(Object.fromEntries(albums));
   } catch (error) {
     console.log("Could not fetch albums");
+    console.log(error);
   }
 }
 
@@ -96,6 +101,36 @@ async function getGigs(sdk) {
     return gigs;
   } catch (error) {
     console.log("Could not fetch gigs");
+    console.log(error);
+  }
+}
+
+async function getReadingList() {
+  try {
+    // TODO: Deprecated use of `crypto` module.
+    // Probs just replicate its behaviour ourselves with more modern implementation.
+    // https://github.com/bryantchan/instapaper-node-sdk/blob/master/index.js
+    const client = new Instapaper(
+      process.env.INSTAPAPER_CONSUMER_ID,
+      process.env.INSTAPAPER_CONSUMER_SECRET
+    );
+    client.setCredentials(
+      process.env.INSTAPAPER_USERNAME,
+      process.env.INSTAPAPER_PASSWORD
+    );
+    const list = await client.list({ limit: 10 });
+
+    return list
+      .filter((item) => item.type === "bookmark")
+      .map((item) => {
+        return {
+          id: item.bookmark_id,
+          title: item.title,
+          url: item.url,
+        };
+      });
+  } catch (error) {
+    console.log("Could not fetch reading list");
     console.log(error);
   }
 }
