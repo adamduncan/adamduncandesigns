@@ -124,6 +124,7 @@ async function getReadingList() {
       .filter((item) => item.type === "bookmark")
       .map((item) => {
         return {
+          hostname: new URL(item.url).hostname,
           id: item.bookmark_id,
           title: item.title,
           url: item.url,
