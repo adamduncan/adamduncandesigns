@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 
 import albums from "~/data/albums.json";
 import gigs from "~/data/gigs.json";
+import links from "~/data/links.json";
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,6 +27,29 @@ export default function Index() {
     <div>
       <h1>Adam Duncan</h1>
       <p>Senior Software Engineer</p>
+
+      {links ? (
+        <section>
+          <h2>Recent links</h2>
+          {links.slice(0, 5).map((link) => {
+            return (
+              <div key={link.id}>
+                {/* TODO: Favicon? */}
+                {/* <img
+                  src={link.image.url}
+                  alt={link.artist}
+                  height={link.image.height}
+                  width={link.image.width}
+                /> */}
+                <div>
+                  <a href={link.url}>{link.title}</a>
+                </div>
+              </div>
+            );
+          })}
+          <a href="https://x.com/FrontEndReads">View more FrontEndReads</a>
+        </section>
+      ) : null}
 
       {albums ? (
         <section>
