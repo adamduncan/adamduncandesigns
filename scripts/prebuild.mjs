@@ -2,6 +2,7 @@
 
 import fs from "node:fs";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { gql, request } from "graphql-request";
 import Instapaper from "instapaper-node-sdk";
 
 import "dotenv/config";
@@ -12,15 +13,17 @@ async function prebuild() {
     const spotifyToken = await getSpotifyAccessToken();
     const spotifySdk = SpotifyApi.withAccessToken("client-id", spotifyToken);
 
-    const [albums, gigs, readingList] = await Promise.all([
+    const [albums, books, gigs, links] = await Promise.all([
       getAlbums(spotifySdk),
+      getBooks(),
       getGigs(spotifySdk),
-      getReadingList(),
+      getLinks(),
     ]);
 
     writeDataFile("albums", JSON.stringify(albums));
+    writeDataFile("books", JSON.stringify(books));
     writeDataFile("gigs", JSON.stringify(gigs));
-    writeDataFile("links", JSON.stringify(readingList));
+    writeDataFile("links", JSON.stringify(links));
   } catch (error) {
     console.log(error);
   }
@@ -71,6 +74,69 @@ async function getAlbums(sdk) {
   }
 }
 
+async function getBooks() {
+  const document = gql`
+    {
+      me {
+        user_books {
+          user_book_reads(limit: 5) {
+            user_book {
+              book {
+                id
+                title
+                contributions {
+                  author {
+                    name
+                  }
+                }
+                release_year
+                image {
+                  url
+                  width
+                  height
+                }
+                slug
+              }
+              created_at
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await request({
+      url: "https://api.hardcover.app/v1/graphql",
+      document,
+      requestHeaders: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.HARDCOVER_API_TOKEN}`,
+      },
+    });
+
+    const books = response.me[0].user_books
+      .map(({ user_book_reads }) => user_book_reads[0].user_book)
+      .map(({ book, created_at }) => {
+        return {
+          author: book.contributions[0].author.name,
+          date_added: created_at,
+          id: book.id,
+          image: book.image,
+          release_year: book.release_year,
+          slug: book.slug,
+          title: book.title,
+        };
+      })
+      .sort((a, b) => new Date(b.date_added) - new Date(a.date_added));
+
+    return books;
+  } catch (error) {
+    console.log("Could not fetch books");
+    console.log(error);
+  }
+}
+
 async function getGigs(sdk) {
   try {
     const data = await sdk.currentUser.playlists.playlists(50);
@@ -105,7 +171,7 @@ async function getGigs(sdk) {
   }
 }
 
-async function getReadingList() {
+async function getLinks() {
   try {
     // TODO: Deprecated use of `crypto` module.
     // Probs just replicate its behaviour ourselves with more modern implementation.
