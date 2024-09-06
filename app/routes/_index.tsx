@@ -3,6 +3,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import albums from "~/data/albums.json";
+import books from "~/data/books.json";
 import gigs from "~/data/gigs.json";
 import links from "~/data/links.json";
 
@@ -16,12 +17,12 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async () => {
-  return json({ albums, gigs });
-};
+// export const loader = async () => {
+//   return json({ albums, gigs });
+// };
 
 export default function Index() {
-  const { albums, gigs } = useLoaderData<typeof loader>();
+  // const { albums, gigs } = useLoaderData<typeof loader>();
 
   return (
     <div>
@@ -46,7 +47,31 @@ export default function Index() {
               </div>
             );
           })}
-          <a href="https://x.com/FrontEndReads">View more FrontEndReads</a>
+          <a href="https://x.com/FrontEndReads">View more @FrontEndReads</a>
+        </section>
+      ) : null}
+
+      {books ? (
+        <section>
+          <h2>Recent reads</h2>
+          {books.slice(0, 5).map((book) => {
+            return (
+              <div key={book.id}>
+                <img
+                  src={book.image.url}
+                  alt={book.title}
+                  height={book.image.height}
+                  width={book.image.width}
+                />
+                <div>{book.author}</div>
+                <div>
+                  <a href={`https://hardcover.app/books/${book.slug}`}>
+                    {book.title}
+                  </a>
+                </div>
+              </div>
+            );
+          })}
         </section>
       ) : null}
 
