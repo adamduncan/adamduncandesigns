@@ -13,15 +13,17 @@ async function prebuild() {
     const spotifyToken = await getSpotifyAccessToken();
     const spotifySdk = SpotifyApi.withAccessToken("client-id", spotifyToken);
 
-    const [albums, books, gigs, links] = await Promise.all([
+    const [albums, books, fitness, gigs, links] = await Promise.all([
       getAlbums(spotifySdk),
       getBooks(),
+      getFitness(),
       getGigs(spotifySdk),
       getLinks(),
     ]);
 
     writeDataFile("albums", JSON.stringify(albums));
     writeDataFile("books", JSON.stringify(books));
+    writeDataFile("fitness", JSON.stringify(fitness));
     writeDataFile("gigs", JSON.stringify(gigs));
     writeDataFile("links", JSON.stringify(links));
   } catch (error) {
@@ -133,6 +135,27 @@ async function getBooks() {
     return books;
   } catch (error) {
     console.log("Could not fetch books");
+    console.log(error);
+  }
+}
+
+async function getFitness() {
+  try {
+    const response = await fetch(
+      "https://www.strava.com/api/v3/athletes/109281469/stats",
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.STRAVA_ACCESS_TOKEN}`,
+        },
+      }
+    );
+    const data = await response.json();
+
+    return {
+      ytd_run_distance: data.ytd_run_totals.distance,
+    };
+  } catch (error) {
+    console.log("Could not fetch fitness data");
     console.log(error);
   }
 }

@@ -2,6 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 
 import albums from "~/data/albums.json";
 import books from "~/data/books.json";
+import fitness from "~/data/fitness.json";
 import gigs from "~/data/gigs.json";
 import links from "~/data/links.json";
 
@@ -252,6 +253,7 @@ export default function Index() {
                     src={`https://icon.horse/icon/${link.hostname}`}
                     alt=""
                     height={100}
+                    loading="lazy"
                     width={100}
                   />
                   <div>
@@ -281,6 +283,7 @@ export default function Index() {
                         src={`https://icon.horse/icon/?uri=${sub.url}`}
                         alt=""
                         height={100}
+                        loading="lazy"
                         width={100}
                       />
                       {sub.title}
@@ -301,6 +304,7 @@ export default function Index() {
                     src={book.image.url}
                     alt={book.title}
                     height={book.image.height}
+                    loading="lazy"
                     width={book.image.width}
                   />
                   <div>
@@ -325,6 +329,7 @@ export default function Index() {
                     src={album.image.url}
                     alt={album.name}
                     height={album.image.width}
+                    loading="lazy"
                     width={album.image.height}
                   />
                   <div>{album.artist}</div>
@@ -347,6 +352,7 @@ export default function Index() {
                     src={gig.image.url}
                     alt={gig.artist}
                     height={gig.image.height}
+                    loading="lazy"
                     width={gig.image.width}
                   />
                   <div>
@@ -362,8 +368,10 @@ export default function Index() {
         <section>
           <h2>Stats</h2>
           <p>
-            427.3km run so far this year. That’s{" "}
-            {((427.3 / 42000) * 100).toFixed(2)}% around the world.
+            {(fitness.ytd_run_distance / 1000).toFixed(2)}km run so far this
+            year. That’s{" "}
+            {((fitness.ytd_run_distance / 40_075_000) * 100).toFixed(2)}% around
+            the world.
           </p>
           <p>
             Starred 512 projects on GitHub. Just think of the{" "}
@@ -373,6 +381,7 @@ export default function Index() {
             Estimated stay in London: 2 years. Actual:{" "}
             {new Date().getFullYear() - 2010} years and counting (sorry, Mum).
           </p>
+          <p>Longest word on Spelling Bee: Annihilation.</p>
         </section>
 
         <section>
