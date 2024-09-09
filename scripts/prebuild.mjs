@@ -42,7 +42,7 @@ async function getSpotifyAccessToken() {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       // TODO: querystring-ify
-      body: `grant_type=refresh_token&refresh_token=${process.env.SPOTIFY_REFRESH_TOKEN}&redirect_uri=${process.env.SPOTIFY_CALLBACK_URI}}`,
+      body: `grant_type=refresh_token&refresh_token=${process.env.SPOTIFY_REFRESH_TOKEN}&redirect_uri=${process.env.SPOTIFY_CALLBACK_URI}`,
     });
     return await response.json();
   } catch (error) {
@@ -53,6 +53,8 @@ async function getSpotifyAccessToken() {
 async function getAlbums(sdk) {
   try {
     const data = await sdk.currentUser.topItems("tracks", "short_term", 50);
+    // TODO: Take from recently played tracks instead
+    // const data = await sdk.player.getRecentlyPlayedTracks(50);
     const { items } = data;
 
     const albums = new Map();
@@ -141,15 +143,29 @@ async function getBooks() {
 
 async function getFitness() {
   try {
-    const response = await fetch(
+    const responseRefresh = await fetch("https://www.strava.com/oauth/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        client_id: process.env.STRAVA_CLIENT_ID,
+        client_secret: process.env.STRAVA_CLIENT_SECRET,
+        grant_type: "refresh_token",
+        refresh_token: process.env.STRAVA_REFRESH_TOKEN,
+      }),
+    });
+    const { access_token } = await responseRefresh.json();
+
+    const responseData = await fetch(
       "https://www.strava.com/api/v3/athletes/109281469/stats",
       {
         headers: {
-          Authorization: `Bearer ${process.env.STRAVA_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${access_token}`,
         },
       }
     );
-    const data = await response.json();
+    const data = await responseData.json();
 
     return {
       ytd_run_distance: data.ytd_run_totals.distance,
