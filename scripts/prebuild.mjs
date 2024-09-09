@@ -52,14 +52,33 @@ async function getSpotifyAccessToken() {
 
 async function getAlbums(sdk) {
   try {
-    const data = await sdk.currentUser.topItems("tracks", "short_term", 50);
-    // TODO: Take from recently played tracks instead
-    // const data = await sdk.player.getRecentlyPlayedTracks(50);
-    const { items } = data;
+    const [recentlyPlayedTracks, topItems] = await Promise.all([
+      sdk.player.getRecentlyPlayedTracks(50),
+      sdk.currentUser.topItems("tracks", "short_term", 50),
+    ]);
 
     const albums = new Map();
 
-    for (const item of items) {
+    // TODO: Refactor this mess
+    // Basically want to treat any recently played tracks (not on shuffle, if possible) as recent listens ahead of "top" albums.
+    for (let i = 0; i < recentlyPlayedTracks.items.length; i++) {
+      const { track } = recentlyPlayedTracks.items[i];
+      const { album } = track;
+      const albumListenCount = recentlyPlayedTracks.items.filter(
+        (item) => item.track.album.uri === album.uri
+      ).length;
+      if (!albums.has(album.uri) && albumListenCount > 2) {
+        albums.set(album.uri, {
+          artist: album.artists[0].name,
+          image: album.images[0],
+          id: album.uri,
+          name: album.name,
+          url: album.external_urls.spotify,
+        });
+      }
+    }
+
+    for (const item of topItems.items) {
       const { album } = item;
       if (!albums.has(album.uri)) {
         albums.set(album.uri, {
@@ -71,6 +90,7 @@ async function getAlbums(sdk) {
         });
       }
     }
+
     return Object.values(Object.fromEntries(albums));
   } catch (error) {
     console.log("Could not fetch albums");
