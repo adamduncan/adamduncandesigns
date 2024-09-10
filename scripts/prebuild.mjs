@@ -65,13 +65,13 @@ async function getAlbums(sdk) {
       const { track } = recentlyPlayedTracks.items[i];
       const { album } = track;
       const albumListenCount = recentlyPlayedTracks.items.filter(
-        (item) => item.track.album.uri === album.uri
+        (item) => item.track.album.id === album.id
       ).length;
-      if (!albums.has(album.uri) && albumListenCount > 2) {
-        albums.set(album.uri, {
+      if (!albums.has(album.id) && albumListenCount > 2) {
+        albums.set(album.id, {
           artist: album.artists[0].name,
           image: album.images[0],
-          id: album.uri,
+          id: album.id,
           name: album.name,
           url: album.external_urls.spotify,
         });
@@ -80,18 +80,18 @@ async function getAlbums(sdk) {
 
     for (const item of topItems.items) {
       const { album } = item;
-      if (!albums.has(album.uri)) {
-        albums.set(album.uri, {
+      if (!albums.has(album.id)) {
+        albums.set(album.id, {
           artist: album.artists[0].name,
           image: album.images[0],
-          id: album.uri,
+          id: album.id,
           name: album.name,
           url: album.external_urls.spotify,
         });
       }
     }
 
-    return Object.values(Object.fromEntries(albums));
+    return Object.values(Object.fromEntries(albums)).slice(0, 5);
   } catch (error) {
     console.log("Could not fetch albums");
     console.log(error);
@@ -141,6 +141,8 @@ async function getBooks() {
 
     const books = response.me[0].user_books
       .map(({ user_book_reads }) => user_book_reads[0].user_book)
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 5)
       .map(({ book, created_at }) => {
         return {
           author: book.contributions[0].author.name,
@@ -151,8 +153,7 @@ async function getBooks() {
           slug: book.slug,
           title: book.title,
         };
-      })
-      .sort((a, b) => new Date(b.date_added) - new Date(a.date_added));
+      });
 
     return books;
   } catch (error) {
@@ -206,23 +207,25 @@ async function getGigs(sdk) {
       gig.name.includes(" — ") &&
       gig.name.includes(" at ");
 
-    const gigs = items.filter(isGig).map((gig) => {
-      const title = gig.name.split(" — ")[0];
+    const gigs = items
+      .filter(isGig)
+      .slice(0, 5)
+      .map((gig) => {
+        const title = gig.name.split(" — ")[0];
 
-      return {
-        artist: title.split(" at ")[0],
-        description: gig.description,
-        id: gig.id,
-        image: {
-          url: gig.images[0].url,
-          height: 300,
-          width: 300,
-        },
-        venue: title.split(" at ")[1],
-        url: gig.external_urls.spotify,
-      };
-    });
-
+        return {
+          artist: title.split(" at ")[0],
+          description: gig.description,
+          id: gig.id,
+          image: {
+            url: gig.images[0].url,
+            height: 300,
+            width: 300,
+          },
+          venue: title.split(" at ")[1],
+          url: gig.external_urls.spotify,
+        };
+      });
     return gigs;
   } catch (error) {
     console.log("Could not fetch gigs");
@@ -247,9 +250,9 @@ async function getLinks() {
 
     return list
       .filter((item) => item.type === "bookmark")
+      .slice(0, 5)
       .map((item) => {
         return {
-          hostname: new URL(item.url).hostname,
           id: item.bookmark_id,
           title: item.title,
           url: item.url,
