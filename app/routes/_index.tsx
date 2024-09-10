@@ -160,8 +160,8 @@ export default function Index() {
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
                   y="0px"
-                  width="26"
-                  height="26"
+                  width="24"
+                  height="24"
                   viewBox="0 0 50 50"
                 >
                   <path
@@ -189,8 +189,8 @@ export default function Index() {
               <a href="https://x.com/duncanadam">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="26"
-                  height="26"
+                  width="24"
+                  height="24"
                   fill="none"
                   viewBox="0 0 1200 1227"
                 >
@@ -207,8 +207,8 @@ export default function Index() {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 98 96"
-                  width="26"
-                  height="26"
+                  width="24"
+                  height="24"
                 >
                   <path
                     fill="#fff"
@@ -224,8 +224,8 @@ export default function Index() {
               <a href="https://www.linkedin.com/in/adamduncandev/">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="26"
-                  height="26"
+                  width="24"
+                  height="24"
                   viewBox="0 0 50 50"
                 >
                   <path
@@ -271,18 +271,20 @@ export default function Index() {
               {readingList.slice(0, 5).map((link) => {
                 const hostname = new URL(link.url).hostname;
                 return (
-                  <li key={link.id}>
-                    <img
-                      src={`https://icon.horse/icon/${hostname}`}
-                      alt=""
-                      height={100}
-                      loading="lazy"
-                      width={100}
-                    />
+                  <li className="inline" key={link.id}>
+                    <div>
+                      <img
+                        src={`https://icon.horse/icon/${hostname}`}
+                        alt=""
+                        height={24}
+                        loading="lazy"
+                        width={24}
+                      />
+                    </div>
                     <div>
                       <a href={link.url}>{link.title}</a>
+                      <div>{hostname}</div>
                     </div>
-                    <div>{hostname}</div>
                   </li>
                 );
               })}
@@ -303,17 +305,17 @@ export default function Index() {
               .sort((a, b) => a.title.localeCompare(b.title))
               .map((sub) => {
                 return (
-                  <li key={sub.url}>
-                    <a href={sub.url}>
+                  <li className="inline" key={sub.url}>
+                    <div>
                       <img
                         src={`https://icon.horse/icon/?uri=${sub.url}`}
                         alt=""
-                        height={100}
+                        height={24}
                         loading="lazy"
-                        width={100}
+                        width={24}
                       />
-                      {sub.title}
-                    </a>
+                    </div>
+                    <a href={sub.url}>{sub.title}</a>
                   </li>
                 );
               })}
@@ -326,20 +328,20 @@ export default function Index() {
             <ol className="list-none">
               {books.slice(0, 5).map((book) => {
                 return (
-                  <li key={book.id}>
+                  <li className="inline" key={book.id}>
                     <img
                       src={book.image.url}
                       alt={book.title}
-                      height={book.image.height}
+                      // height={book.image.height}
                       loading="lazy"
-                      width={book.image.width}
+                      width={96}
                     />
                     <div>
                       <a href={`https://hardcover.app/books/${book.slug}`}>
                         {book.title}
                       </a>
+                      <div>{book.author}</div>
                     </div>
-                    <div>{book.author}</div>
                   </li>
                 );
               })}
@@ -353,17 +355,19 @@ export default function Index() {
             <ol className="list-none">
               {albums.slice(0, 5).map((album) => {
                 return (
-                  <li key={album.id}>
+                  <li className="inline" key={album.id}>
                     <img
                       src={album.image.url}
                       alt={album.name}
-                      height={album.image.width}
+                      // height={album.image.width}
                       loading="lazy"
-                      width={album.image.height}
+                      width={96}
                     />
-                    <div>{album.artist}</div>
                     <div>
-                      <a href={album.url}>{album.name}</a>
+                      <div>{album.artist}</div>
+                      <div>
+                        <a href={album.url}>{album.name}</a>
+                      </div>
                     </div>
                   </li>
                 );
@@ -378,18 +382,18 @@ export default function Index() {
             <ol className="list-none">
               {gigs.slice(0, 5).map((gig) => {
                 return (
-                  <li key={gig.id}>
+                  <li className="inline" key={gig.id}>
                     <img
                       src={gig.image.url}
                       alt={gig.artist}
-                      height={gig.image.height}
+                      // height={gig.image.height}
                       loading="lazy"
-                      width={gig.image.width}
+                      width={96}
                     />
                     <div>
                       <a href={gig.url}>{gig.artist}</a>
+                      <div>{gig.venue}</div>
                     </div>
-                    <div>{gig.venue}</div>
                   </li>
                 );
               })}
@@ -440,12 +444,11 @@ export default function Index() {
             and automatically deployed to{" "}
             <a href="https://www.netlify.com/">Netlify</a>. Life data pulled in
             from Spotify, Hardcover, Instapaper, GitHub, Strava, and Website
-            Carbon Calculator. It ain’t pretty, but the source code for this
-            site is{" "}
+            Carbon Calculator. It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">
-              available on GitHub
-            </a>
-            .
+              source code for this site
+            </a>{" "}
+            is available on GitHub.
           </p>
         </section>
       </main>
