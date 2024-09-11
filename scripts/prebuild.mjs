@@ -250,7 +250,7 @@ async function getLinks() {
 
     return list
       .filter((item) => item.type === "bookmark")
-      .slice(0, 5)
+      .slice(0, 6)
       .map((item) => {
         return {
           id: item.bookmark_id,
