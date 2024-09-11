@@ -1,6 +1,18 @@
 :root {
+  --border-radius: 0.5rem;
+
+  --color-bg: #1b1b1b;
+  --color-bg-prominent: #181818;
   --color-text: #b3b3b3;
   --color-text-prominent: #f1f1f1;
+
+  --size-2xs: 0.25rem; /* 4px */
+  --size-xs: 0.5rem; /* 8px */
+  --size-sm: 1rem; /* 16px */
+  --size-md: 1.5rem; /* 24px */
+  --size-lg: 2rem; /* 32px */
+  --size-xl: 3rem; /* 48px */
+  --size-2xl: 4rem; /* 64px */
 }
 
 @font-face {
@@ -19,6 +31,28 @@
   src: url("/fonts/national-2-condensed-medium.woff2") format("woff2");
 }
 
+/* Leading trim */
+/* h1,
+h2,
+p,
+li:not([class]) {
+  display: flow-root;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+  }
+
+  &::before {
+    margin-top: -0.193em;
+  }
+
+  &::after {
+    margin-bottom: -0.141em;
+  }
+} */
+
 /* Reset */
 h1,
 h2,
@@ -29,6 +63,12 @@ ul {
 }
 
 /* Doc */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 html {
   box-sizing: border-box;
   color-scheme: dark;
@@ -37,22 +77,51 @@ html {
 }
 
 body {
-  background-color: #1b1b1b;
+  background-color: var(--color-bg);
   color: var(--color-text);
   font-family: "National 2", sans-serif;
   margin: 0;
-  padding-block: 2rem;
+  padding-block-start: var(--size-xl);
+  padding-inline: var(--size-sm);
+
+  @media (min-width: 45em) {
+    padding-inline: var(--size-2xl);
+  }
 }
 
 header,
 main,
 footer {
+  --gap: var(--size-sm);
+  gap: var(--gap);
   margin-inline: auto;
   max-width: 87.5rem; /* 1400px */
-  padding: 1rem;
+
+  @media (min-width: 60em) {
+    --gap: var(--size-md);
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--size-md);
+
+  @media (min-width: 45em) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: 60em) {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 /* Type */
+::selection {
+  color: var(--color-bg);
+  background-color: var(--color-text);
+}
+
 h1,
 h2 {
   color: var(--color-text-prominent);
@@ -60,23 +129,30 @@ h2 {
   font-weight: 600;
 }
 
+/* Leading trimmed text */
+/* h1,
+h2,
+p,
+li {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+} */
+
 h1 {
-  font-size: 3rem; /* 48px */
+  font-size: 3.5rem; /* 56px */
   line-height: 1;
-  margin-block-end: 0.25em;
 }
 
 h2 {
   font-size: 2rem; /* 32px */
   line-height: 1.125;
-  margin-block-end: 0.5em;
 }
 
 p,
-ol,
-ul {
+li {
   font-size: 1rem; /* 16px */
-  line-height: 1.5; /* 24px */
+  line-height: 1.5;
+  text-wrap: pretty;
 
   @media (min-width: 60em) {
     font-size: 1.125rem; /* 18px */
@@ -84,7 +160,7 @@ ul {
 }
 
 li {
-  margin-block-start: 0.5em;
+  break-inside: avoid-column;
 }
 
 .list-none {
@@ -113,6 +189,11 @@ a {
   border-radius: 0.25rem; /* TODO: Radii */
 }
 
+.text-large {
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.25;
+}
+
 /* Media */
 img {
   max-width: 100%;
@@ -129,12 +210,72 @@ img[src$=".svg"] {
 }
 
 /* Layout */
+.flow > * + * {
+  margin-block-start: var(--gap);
+}
+.flow--gap-sm > * + * {
+  margin-block-start: calc(var(--gap) / 2);
+}
+
 .inline {
   display: flex;
-  gap: 1rem;
+  gap: var(--gap);
+  flex-wrap: nowrap;
+}
+.inline--gap-sm {
+  gap: calc(var(--gap) / 2);
+}
+
+/* Components */
+.card {
+  border-radius: var(--border-radius);
+  padding: calc(2 * var(--gap)) var(--gap) var(--gap);
 }
 
 /* Utils */
-.pb-xl {
-  padding-block: 2rem; /* TODO: Spacing scale */
+.bg-prominent {
+  background-color: var(--color-bg-prominent);
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+@media (min-width: 60em) {
+  .lg\:col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+  .lg\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+  .lg\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+  .lg\:col-span-6 {
+    grid-column: span 6 / span 6;
+  }
+}
+
+.col-start-1 {
+  grid-column-start: 1;
+}
+
+@media (min-width: 45em) {
+  .md\:columns-2 {
+    column-gap: calc(2 * var(--gap));
+    columns: 2;
+  }
+}
+@media (min-width: 60em) {
+  .lg\:columns-3 {
+    column-gap: calc(3 * var(--gap));
+    columns: 3;
+  }
+}
+
+.mbs-xl {
+  margin-block-start: var(--size-xl);
+}
+
+.mbs-2xs {
+  margin-block-start: var(--size-2xs);
 }
