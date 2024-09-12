@@ -100,6 +100,20 @@ export const links: LinksFunction = () => {
     //   rel: "preconnect",
     //   href: "https://icon.horse",
     // },
+    {
+      rel: "preload",
+      as: "font",
+      crossOrigin: "anonymous",
+      href: "/fonts/national-2-condensed-medium.woff2",
+      type: "font/woff2",
+    },
+    {
+      rel: "preload",
+      as: "font",
+      crossOrigin: "anonymous",
+      href: "/fonts/national-2-regular.woff2",
+      type: "font/woff2",
+    },
   ];
 };
 
@@ -123,7 +137,7 @@ export default function Index() {
           id="intro"
         >
           <h2>Hey</h2>
-          <p>
+          <p className="max-w-prose">
             I’m a front-end developer with {Math.floor(currentYear - 2008)}{" "}
             years’ experience, keen to work on a wide range of projects, and
             deepen my understanding of modern web technologies. I’m passionate
@@ -139,7 +153,39 @@ export default function Index() {
           <h2>Now</h2>
           <p>
             Senior Software Engineer at{" "}
-            <a href="https://www.shopify.com/">Shopify</a>
+            <a
+              className="inline inline--gap-xs align-middle"
+              href="https://www.shopify.com/"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+              >
+                <g clipPath="url(#a)">
+                  <path
+                    fill="#95BF46"
+                    d="m19.9 4.7-.2-.2-2-.1L16.3 3c-.1-.2-.4-.1-.5-.1l-.7.2C14.7 2 13.9.8 12.6.8h-.1c-.4-.5-.9-.7-1.3-.7-3 0-4.5 3.8-5 5.8l-2.1.6c-.7.2-.7.3-.8.9l-1.8 14L15 23.9l7.4-1.6-2.6-17.6Zm-5.6-1.3-1.1.3v-.2c0-.8-.1-1.4-.3-1.9.7 0 1.1.9 1.4 1.8Zm-2.2-1.6c.2.4.3 1.1.3 2V4l-2.4.7c.5-1.8 1.3-2.6 2-3Zm-1-1 .5.2c-1 .5-2 1.7-2.5 4l-2 .6C7.8 3.8 9 .9 11.2.9Z"
+                  />
+                  <path
+                    fill="#5E8E3E"
+                    d="m19.7 4.5-2-.1L16.3 3l-.2-.1-1 21 7.4-1.6-2.6-17.6-.2-.2Z"
+                  />
+                  <path
+                    fill="#fff"
+                    d="m12.6 8.6-1 2.7s-.7-.4-1.7-.4c-1.4 0-1.5.9-1.5 1.1 0 1.2 3.2 1.7 3.2 4.6 0 2.3-1.4 3.8-3.4 3.8-2.3 0-3.5-1.5-3.5-1.5l.6-2s1.3 1 2.3 1c.7 0 1-.5 1-1 0-1.6-2.7-1.6-2.7-4.3 0-2.2 1.6-4.4 4.8-4.4a4 4 0 0 1 1.9.4Z"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="a">
+                    <path fill="#fff" d="M0 0h24v24H0z" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Shopify
+            </a>
           </p>
         </section>
 
@@ -167,8 +213,12 @@ export default function Index() {
               <a href="https://mslgroup.com/">MSL (Publicis)</a>
             </li>
             <li>
-              <a href="https://www.linkedin.com/in/adamduncandev">
+              <a
+                className="inline inline--gap-xs"
+                href="https://www.linkedin.com/in/adamduncandev"
+              >
                 <svg
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
                   y="0px"
@@ -236,10 +286,12 @@ export default function Index() {
           <ul className="flow flow--gap-sm list-none">
             <li>
               <a
-                className="inline inline--gap-sm"
+                className="inline inline--gap-xs"
                 href="https://x.com/duncanadam"
               >
                 <svg
+                  aria-hidden="true"
+                  className="p-3xs"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -256,10 +308,11 @@ export default function Index() {
             </li>
             <li>
               <a
-                className="inline inline--gap-sm"
+                className="inline inline--gap-xs"
                 href="https://github.com/adamduncan"
               >
                 <svg
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 98 96"
                   width="24"
@@ -277,10 +330,11 @@ export default function Index() {
             </li>
             <li>
               <a
-                className="inline inline--gap-sm"
+                className="inline inline--gap-xs"
                 href="https://www.linkedin.com/in/adamduncandev/"
               >
                 <svg
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -307,9 +361,10 @@ export default function Index() {
               {readingList.slice(0, 6).map((link) => {
                 const hostname = new URL(link.url).hostname;
                 return (
-                  <li className="inline inline--gap-sm" key={link.id}>
+                  <li className="inline inline--gap-sm relative" key={link.id}>
                     <div>
                       <img
+                        className="aspect-square size-md"
                         src={`https://icon.horse/icon/${hostname}`}
                         alt=""
                         height={24}
@@ -318,7 +373,9 @@ export default function Index() {
                       />
                     </div>
                     <div>
-                      <a href={link.url}>{link.title}</a>
+                      <a className="link-cover" href={link.url}>
+                        {link.title}
+                      </a>
                       <div>{hostname}</div>
                     </div>
                   </li>
@@ -326,8 +383,24 @@ export default function Index() {
               })}
             </ol>
             <p>
-              <a href="https://x.com/FrontEndReads">
-                View more @FrontEndReads →
+              <a
+                className="inline inline--gap-xs items-baseline"
+                href="https://x.com/FrontEndReads"
+              >
+                View more @FrontEndReads
+                <svg
+                  aria-hidden="true"
+                  className="size-sm"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="var(--color-text)"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
               </a>
             </p>
           </section>
@@ -339,17 +412,23 @@ export default function Index() {
             <ol className="flow list-none">
               {books.slice(0, 4).map((book) => {
                 return (
-                  <li className="inline inline--gap-sm" key={book.id}>
+                  <li className="inline relative" key={book.id}>
                     <img
-                      className="mbs-2xs"
+                      className="bg mbs-2xs width-3xl"
                       src={book.image.url}
                       alt={book.title}
-                      // height={book.image.height}
+                      height={book.image.height}
                       loading="lazy"
-                      width={96}
+                      width={book.image.width}
+                      style={{
+                        aspectRatio: `${book.image.width} / ${book.image.height}`,
+                      }}
                     />
                     <div>
-                      <a href={`https://hardcover.app/books/${book.slug}`}>
+                      <a
+                        className="link-cover"
+                        href={`https://hardcover.app/books/${book.slug}`}
+                      >
                         {book.title}
                       </a>
                       <div>{book.author}</div>
@@ -367,18 +446,20 @@ export default function Index() {
             <ol className="flow list-none">
               {albums.slice(0, 5).map((album) => {
                 return (
-                  <li className="inline inline--gap-sm" key={album.id}>
+                  <li className="inline relative" key={album.id}>
                     <img
-                      className="mbs-2xs"
+                      className="aspect-square bg mbs-2xs width-3xl"
                       src={album.image.url}
                       alt={album.name}
-                      // height={album.image.width}
+                      height={album.image.width}
                       loading="lazy"
                       width={96}
                     />
                     <div>
                       <div>
-                        <a href={album.url}>{album.name}</a>
+                        <a className="link-cover" href={album.url}>
+                          {album.name}
+                        </a>
                       </div>
                       <div>{album.artist}</div>
                     </div>
@@ -395,18 +476,19 @@ export default function Index() {
             <ol className="flow list-none">
               {gigs.slice(0, 5).map((gig) => {
                 return (
-                  <li className="inline inline--gap-sm" key={gig.id}>
-                    {/* TODO: Image aspect/container */}
+                  <li className="inline relative" key={gig.id}>
                     <img
-                      className="mbs-2xs"
+                      className="aspect-square bg object-cover mbs-2xs width-3xl"
                       src={gig.image.url}
                       alt={gig.artist}
-                      // height={gig.image.height}
+                      height={gig.image.height}
                       loading="lazy"
-                      width={96}
+                      width={gig.image.width}
                     />
                     <div>
-                      <a href={gig.url}>{gig.artist}</a>
+                      <a className="link-cover" href={gig.url}>
+                        {gig.artist}
+                      </a>
                       <div>{gig.venue}</div>
                     </div>
                   </li>
@@ -420,15 +502,16 @@ export default function Index() {
           className="flow card bg-prominent col-span-2 lg:col-span-6"
           id="newsletters"
         >
-          <h2>Subs</h2>
+          <h2>Newsroll</h2>
           <ol className="flow flow--gap-sm list-none md:columns-2 lg:columns-3">
             {subs
               .sort((a, b) => a.title.localeCompare(b.title))
               .map((sub) => {
                 return (
-                  <li className="inline inline--gap-sm" key={sub.url}>
+                  <li className="inline inline--gap-sm relative" key={sub.url}>
                     <div>
                       <img
+                        className="aspect-square size-md"
                         src={`https://icon.horse/icon/?uri=${sub.url}`}
                         alt=""
                         height={24}
@@ -436,12 +519,29 @@ export default function Index() {
                         width={24}
                       />
                     </div>
-                    <a href={sub.url}>{sub.title}</a>
+                    <a className="link-cover" href={sub.url}>
+                      {sub.title}
+                    </a>
                   </li>
                 );
               })}
           </ol>
-          <p>↑ A non-exhaustive list of the newsletters that keep me going.</p>
+          <p className="inline inline--gap-xs items-baseline">
+            <svg
+              aria-hidden="true"
+              className="size-sm"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 14a.75.75 0 0 1-.75-.75V4.56L4.03 7.78a.75.75 0 0 1-1.06-1.06l4.5-4.5a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1-1.06 1.06L8.75 4.56v8.69A.75.75 0 0 1 8 14Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            A non-exhaustive list of the newsletters that keep me going.
+          </p>
         </section>
 
         <section className="flow card bg-prominent lg:col-span-4" id="stats">
@@ -461,7 +561,7 @@ export default function Index() {
               around the world.
             </li>
             <li>
-              Starred 512 projects on GitHub. Just think of the{" "}
+              Starred 515 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.
             </li>
             <li>
