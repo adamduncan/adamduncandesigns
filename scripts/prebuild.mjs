@@ -72,7 +72,7 @@ async function getAlbums(sdk) {
           artist: album.artists[0].name,
           image: album.images[0],
           id: album.id,
-          name: album.name,
+          name: album.name.split("(")[0].trim(),
           url: album.external_urls.spotify,
         });
       }
