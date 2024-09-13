@@ -122,9 +122,13 @@ h2 {
 
 p,
 li {
-  font-size: 1.125rem; /* 18px */
+  font-size: 1rem; /* 16px */
   line-height: 1.5;
   text-wrap: pretty;
+
+  @media (min-width: 60em) {
+    font-size: 1.125rem; /* 18px */
+  }
 }
 
 li {
@@ -189,6 +193,11 @@ img[src$=".svg"] {
   display: flex;
   gap: var(--gap);
   flex-wrap: nowrap;
+
+  > *:has(img, svg),
+  > :is(img, svg) {
+    flex-shrink: 0;
+  }
 }
 .inline--gap-xs {
   gap: calc(var(--gap) / 4);
@@ -278,6 +287,10 @@ img[src$=".svg"] {
 
 .max-w-prose {
   max-width: 58ch;
+}
+
+.mbs-sm {
+  margin-block-start: var(--size-sm);
 }
 
 .mbs-2xs {
