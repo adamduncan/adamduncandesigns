@@ -82,24 +82,30 @@ export const meta: MetaFunction = () => {
     { title: "Adam Duncan — Software Engineer, London, UK" },
     {
       name: "description",
-      // TODO: Description
-      content: "Adam Duncan — Software Engineer, London, UK",
+      content: `I’m a front-end developer with ${Math.floor(
+        new Date().getFullYear() - 2008
+      )} years’ experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`,
     },
   ];
 };
 
 export const links: LinksFunction = () => {
   return [
-    // TODO: Favicon, Social meta, etc.
-    // {
-    //   rel: "icon",
-    //   href: "/favicon.png",
-    //   type: "image/png",
-    // },
-    // {
-    //   rel: "preconnect",
-    //   href: "https://icon.horse",
-    // },
+    { rel: "manifest", href: "/manifest.webmanifest" },
+    {
+      rel: "icon",
+      href: "/favicon.ico",
+      sizes: "32x32",
+    },
+    {
+      rel: "icon",
+      href: "/icon.svg",
+      type: "image/svg+xml",
+    },
+    {
+      rel: "apple-touch-icon",
+      href: "/apple-touch-icon.png",
+    },
     {
       rel: "preload",
       as: "font",
@@ -214,7 +220,7 @@ export default function Index() {
             </li>
             <li>
               <a
-                className="inline inline--gap-xs"
+                className="inline inline--gap-xs mbs-sm"
                 href="https://www.linkedin.com/in/adamduncandev"
               >
                 <svg
@@ -357,7 +363,7 @@ export default function Index() {
             id="links"
           >
             <h2>Recent links</h2>
-            <ol className="flow flow--gap-sm list-none md:columns-2">
+            <ol className="flow list-none md:columns-2">
               {readingList.slice(0, 6).map((link) => {
                 const hostname = new URL(link.url).hostname;
                 return (
