@@ -59,18 +59,6 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-{
-  /* <meta name="twitter:title" content="European Travel Destinations ">
-<meta name="twitter:description" content=" Offering tour packages for individuals or groups.">
-<meta name="twitter:image" content=" http://euro-travel-example.com/thumbnail.jpg">
-<meta name="twitter:card" content="summary_large_image"></meta>
-
-    <meta property="og:title" content="The Rock" />
-<meta property="og:type" content="video.movie" />
-<meta property="og:url" content="https://www.imdb.com/title/tt0117500/" />
-<meta property="og:image" content="https://ia.media-imdb.com/images/rock.jpg" /> */
-}
-
 export const links: LinksFunction = () => {
   return [
     { rel: "manifest", href: "/manifest.webmanifest" },
@@ -531,7 +519,8 @@ export default function Index() {
                 clipRule="evenodd"
               />
             </svg>
-            A non-exhaustive list of the newsletters that keep me going.
+            A non-exhaustive list of the newsletters that keep me going. Thanks
+            all.
           </p>
         </section>
 
