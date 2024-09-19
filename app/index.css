@@ -58,7 +58,8 @@ html {
 }
 
 body {
-  background-color: var(--color-bg);
+  background: var(--color-bg)
+    radial-gradient(100rem circle at 90% 0%, #1e1e1e 10%, var(--color-bg) 100%);
   color: var(--color-text);
   font-family: "National 2", Arial, sans-serif;
   margin: 0;
