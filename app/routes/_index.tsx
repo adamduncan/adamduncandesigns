@@ -4,90 +4,72 @@ import albums from "~/data/albums.json";
 import books from "~/data/books.json";
 import fitness from "~/data/fitness.json";
 import gigs from "~/data/gigs.json";
+import newsletters from "~/data/newsletters.json";
 import readingList from "~/data/links.json";
 
-const subs = [
-  {
-    title: "Bytes",
-    url: "https://bytes.dev/",
-  },
-  {
-    title: "Frontend Focus",
-    url: "https://frontendfoc.us/",
-  },
-  {
-    title: "Remix",
-    url: "https://remix.run/newsletter",
-  },
-  {
-    title: "It’s Nice That",
-    url: "https://www.itsnicethat.com/newsletters",
-  },
-  {
-    title: "Adam Silver",
-    url: "https://adamsilver.io/newsletter/",
-  },
-  {
-    title: "Kent C. Dodds",
-    url: "https://kentcdodds.com/subscribe",
-  },
-  {
-    title: "Total TypeScript",
-    url: "https://www.totaltypescript.com/newsletter",
-  },
-  {
-    title: "Robin Sloan",
-    url: "https://www.robinsloan.com/newsletters/",
-  },
-  {
-    title: "Matthias Ott",
-    url: "https://buttondown.com/ownyourweb",
-  },
-  {
-    title: "Robin Rendle",
-    url: "https://robinrendle.com/essays/newsletters/",
-  },
-  {
-    title: "funfun.email",
-    url: "https://fff.dev/mail",
-  },
-  {
-    title: "The Index",
-    url: "https://piccalil.li/the-index/",
-  },
-  {
-    title: "Design Systems Weekly",
-    url: "https://news.design.systems/",
-  },
-  {
-    title: "Josh W. Comeau",
-    url: "https://www.joshwcomeau.com/subscribe/",
-  },
-  {
-    title: "Human Who Codes",
-    url: "https://newsletter.humanwhocodes.com/",
-  },
-  {
-    title: "The Overflow",
-    url: "https://stackoverflow.blog/newsletter",
-  },
-  {
-    title: "Syntax.fm",
-    url: "https://syntax.fm/snackpack",
-  },
-];
-
 export const meta: MetaFunction = () => {
+  const title = "Adam Duncan — Software Engineer, London, UK";
+  const description = `I’m a front-end developer with ${Math.floor(
+    new Date().getFullYear() - 2008
+  )} years’ experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`;
+  const image = "https://www.adamduncandesigns.com/icon-512.png";
+
   return [
-    { title: "Adam Duncan — Software Engineer, London, UK" },
+    { title },
     {
       name: "description",
-      content: `I’m a front-end developer with ${Math.floor(
-        new Date().getFullYear() - 2008
-      )} years’ experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`,
+      content: description,
+    },
+    {
+      property: "og:title",
+      content: title,
+    },
+    {
+      property: "og:description",
+      content: description,
+    },
+    {
+      property: "og:image",
+      content: image,
+    },
+    {
+      property: "og:url",
+      content: "https://www.adamduncandesigns.com/",
+    },
+    {
+      property: "og:type",
+      content: "profile",
+    },
+    {
+      name: "twitter:card",
+      content: "summary",
+    },
+    {
+      name: "twitter:site",
+      content: "@duncanadam",
+    },
+    {
+      name: "twitter:creator",
+      content: "@duncanadam",
+    },
+    {
+      name: "twitter:image",
+      content: image,
     },
   ];
 };
+
+{
+  /* <meta name="twitter:title" content="European Travel Destinations ">
+<meta name="twitter:description" content=" Offering tour packages for individuals or groups.">
+<meta name="twitter:image" content=" http://euro-travel-example.com/thumbnail.jpg">
+<meta name="twitter:card" content="summary_large_image"></meta>
+
+    <meta property="og:title" content="The Rock" />
+<meta property="og:type" content="video.movie" />
+<meta property="og:url" content="https://www.imdb.com/title/tt0117500/" />
+<meta property="og:image" content="https://ia.media-imdb.com/images/rock.jpg" /> */
+}
 
 export const links: LinksFunction = () => {
   return [
@@ -510,23 +492,26 @@ export default function Index() {
         >
           <h2>Newsroll</h2>
           <ol className="flow flow--gap-sm list-none md:columns-2 lg:columns-3">
-            {subs
+            {newsletters
               .sort((a, b) => a.title.localeCompare(b.title))
-              .map((sub) => {
+              .map((newsletter) => {
                 return (
-                  <li className="inline inline--gap-sm relative" key={sub.url}>
+                  <li
+                    className="inline inline--gap-sm relative"
+                    key={newsletter.url}
+                  >
                     <div>
                       <img
                         className="aspect-square size-md"
-                        src={`https://icon.horse/icon/?uri=${sub.url}`}
+                        src={`https://icon.horse/icon/?uri=${newsletter.url}`}
                         alt=""
                         height={24}
                         loading="lazy"
                         width={24}
                       />
                     </div>
-                    <a className="link-cover" href={sub.url}>
-                      {sub.title}
+                    <a className="link-cover" href={newsletter.url}>
+                      {newsletter.title}
                     </a>
                   </li>
                 );
@@ -589,11 +574,13 @@ export default function Index() {
             and automatically deployed to{" "}
             <a href="https://www.netlify.com/">Netlify</a>. Life data pulled in
             from Spotify, Hardcover, Instapaper, GitHub, Strava, and Website
-            Carbon Calculator. It ain’t pretty, but the{" "}
+            Carbon Calculator.
+            {/* TODO: TBD */}
+            {/* It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">
               source code for this site
             </a>{" "}
-            is available on GitHub.
+            is available on GitHub. */}
           </p>
         </section>
       </main>
