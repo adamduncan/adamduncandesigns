@@ -553,12 +553,13 @@ export default function Index() {
         <section className="flow card bg-prominent lg:col-span-4" id="stats">
           <h2>Stats</h2>
           <ul className="flow flow--gap-sm list-none">
+            {/* TODO: Fetch from Website Carbon API */}
             <li>
               This page achieves a carbon{" "}
               <a href="https://www.websitecarbon.com/website/adamduncandesigns-com/">
-                rating of A+
+                rating of B
               </a>
-              , cleaner than 98% of all web pages globally.
+              , cleaner than 80% of all web pages globally.
             </li>
             <li>
               {(fitness.ytd_run_distance / 1000).toFixed(2)}km run so far this
@@ -566,6 +567,7 @@ export default function Index() {
               {((fitness.ytd_run_distance / 40_075_000) * 100).toFixed(2)}%
               around the world.
             </li>
+            {/* TODO: Fetch from GitHub */}
             <li>
               Starred 515 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.

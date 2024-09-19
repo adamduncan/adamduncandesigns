@@ -59,7 +59,7 @@ async function getAlbums(sdk) {
 
     const albums = new Map();
 
-    // TODO: Refactor this mess
+    // TODO: Rethink/refactor this messiness.
     // Basically want to treat any recently played tracks (not on shuffle, if possible) as recent listens ahead of "top" albums.
     for (let i = 0; i < recentlyPlayedTracks.items.length; i++) {
       const { track } = recentlyPlayedTracks.items[i];
@@ -67,27 +67,16 @@ async function getAlbums(sdk) {
       const albumListenCount = recentlyPlayedTracks.items.filter(
         (item) => item.track.album.id === album.id
       ).length;
+
       if (!albums.has(album.id) && albumListenCount > 2) {
-        albums.set(album.id, {
-          artist: album.artists[0].name,
-          image: album.images[0],
-          id: album.id,
-          name: album.name.split("(")[0].trim(),
-          url: album.external_urls.spotify,
-        });
+        addAlbum(album, albums);
       }
     }
 
     for (const item of topItems.items) {
       const { album } = item;
       if (!albums.has(album.id)) {
-        albums.set(album.id, {
-          artist: album.artists[0].name,
-          image: album.images[0],
-          id: album.id,
-          name: album.name,
-          url: album.external_urls.spotify,
-        });
+        addAlbum(album, albums);
       }
     }
 
@@ -164,7 +153,7 @@ async function getBooks() {
 
 async function getFitness() {
   try {
-    const responseRefresh = await fetch("https://www.strava.com/oauth/token", {
+    const responseToken = await fetch("https://www.strava.com/oauth/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -176,9 +165,9 @@ async function getFitness() {
         refresh_token: process.env.STRAVA_REFRESH_TOKEN,
       }),
     });
-    const { access_token } = await responseRefresh.json();
+    const { access_token } = await responseToken.json();
 
-    const responseData = await fetch(
+    const responseStats = await fetch(
       "https://www.strava.com/api/v3/athletes/109281469/stats",
       {
         headers: {
@@ -186,7 +175,7 @@ async function getFitness() {
         },
       }
     );
-    const data = await responseData.json();
+    const data = await responseStats.json();
 
     return {
       ytd_run_distance: data.ytd_run_totals.distance,
@@ -262,6 +251,16 @@ async function getLinks() {
     console.log("Could not fetch reading list");
     console.log(error);
   }
+}
+
+function addAlbum(album, albums) {
+  albums.set(album.id, {
+    artist: album.artists[0].name,
+    image: album.images[0],
+    id: album.id,
+    name: album.name.split("(")[0].trim(),
+    url: album.external_urls.spotify,
+  });
 }
 
 async function writeDataFile(key, content) {
