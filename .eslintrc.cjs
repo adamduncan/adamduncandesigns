@@ -45,7 +45,9 @@ module.exports = {
           { name: "NavLink", linkAttribute: "to" },
         ],
         "import/resolver": {
-          typescript: {},
+          typescript: {
+            project: "./tsconfig.json"
+          },
         },
       },
     },
@@ -58,11 +60,8 @@ module.exports = {
       settings: {
         "import/internal-regex": "^~/",
         "import/resolver": {
-          node: {
-            extensions: [".ts", ".tsx"],
-          },
           typescript: {
-            alwaysTryTypes: true,
+            project: "./tsconfig.json"
           },
         },
       },

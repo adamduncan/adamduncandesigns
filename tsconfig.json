@@ -1,33 +1,35 @@
 {
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/.server/**/*.ts",
-    "**/.server/**/*.tsx",
-    "**/.client/**/*.ts",
-    "**/.client/**/*.tsx",
-    "netlify-edge-plugin.ts"
+"compilerOptions": {
+  "baseUrl": ".",
+  "paths": {
+    "~/*": ["./*"]
+  },
+  "strict": true,
+  "rootDir": ".",
+  "noEmit": true,
+  "module": "Preserve",
+  // allows react-native style imports without path extensions, for compat with platform-specific files
+  "moduleResolution": "Bundler",
+  "preserveSymlinks": true,
+  "skipLibCheck": true,
+  "jsx": "react-jsx",
+  "noImplicitAny": false,
+  "types": [
+    "node",
+    "react",
+    "vite/client"
   ],
-  "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["@remix-run/node", "vite/client"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "target": "ES2022",
-    "strict": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"]
-    },
-
-    // Vite takes care of building everything, not tsc.
-    "noEmit": true
-  }
+  "lib": [
+    "dom",
+    "esnext"
+  ]
+},
+"exclude": [
+  "node_modules",
+  ".expo",
+  "**/test",
+  "**/dist",
+  "**/types",
+  "**/__tests__"
+],
 }
