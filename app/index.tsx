@@ -5,56 +5,28 @@ import gigs from "~/data/gigs.json";
 import newsletters from "~/data/newsletters.json";
 import readingList from "~/data/links.json";
 
-export const meta = () => {
+const Meta = () => {
   const title = "Adam Duncan — Software Engineer, London, UK";
-  const description = `I’m a front-end developer with ${Math.floor(
+  const description = `I'm a front-end developer with ${Math.floor(
     new Date().getFullYear() - 2008
-  )} years’ experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`;
+  )} years' experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`;
   const image = "https://www.adamduncandesigns.com/icon-512.png";
 
-  return [
-    { title },
-    {
-      name: "description",
-      content: description,
-    },
-    {
-      property: "og:title",
-      content: title,
-    },
-    {
-      property: "og:description",
-      content: description,
-    },
-    {
-      property: "og:image",
-      content: image,
-    },
-    {
-      property: "og:url",
-      content: "https://www.adamduncandesigns.com/",
-    },
-    {
-      property: "og:type",
-      content: "profile",
-    },
-    {
-      name: "twitter:card",
-      content: "summary",
-    },
-    {
-      name: "twitter:site",
-      content: "@duncanadam",
-    },
-    {
-      name: "twitter:creator",
-      content: "@duncanadam",
-    },
-    {
-      name: "twitter:image",
-      content: image,
-    },
-  ];
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content="https://www.adamduncandesigns.com/" />
+      <meta property="og:type" content="profile" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="@duncanadam" />
+      <meta name="twitter:creator" content="@duncanadam" />
+      <meta name="twitter:image" content={image} />
+    </>
+  );
 };
 
 export const links = () => {
@@ -96,6 +68,7 @@ export default function Index() {
 
   return (
     <>
+      <Meta />
       <header className="flow card">
         <h1>Adam Duncan</h1>
         <p className="text-large">
