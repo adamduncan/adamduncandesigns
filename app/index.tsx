@@ -57,7 +57,7 @@ export const meta = () => {
   ];
 };
 
-export const links: LinksFunction = () => {
+export const links = () => {
   return [
     { rel: "manifest", href: "/manifest.webmanifest" },
     {
