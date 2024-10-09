@@ -1,13 +1,11 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-
 import albums from "~/data/albums.json";
 import books from "~/data/books.json";
 import fitness from "~/data/fitness.json";
 import gigs from "~/data/gigs.json";
 import newsletters from "~/data/newsletters.json";
-import readingList from "~/data/links.json";
+import readingList from "~/data/books.json";
 
-export const meta: MetaFunction = () => {
+export const meta = () => {
   const title = "Adam Duncan — Software Engineer, London, UK";
   const description = `I’m a front-end developer with ${Math.floor(
     new Date().getFullYear() - 2008
@@ -335,7 +333,12 @@ export default function Index() {
             <h2>Recent links</h2>
             <ol className="flow list-none md:columns-2">
               {readingList.slice(0, 6).map((link) => {
-                const hostname = new URL(link.url).hostname;
+                let hostname;
+                try {
+                  hostname = new URL(link.url).hostname;
+                } catch (e) {
+                  return null;
+                }
                 return (
                   <li className="inline inline--gap-sm relative" key={link.id}>
                     <div>

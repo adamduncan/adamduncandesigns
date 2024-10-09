@@ -4,6 +4,8 @@ import fs from "node:fs";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { gql, request } from "graphql-request";
 import Instapaper from "instapaper-node-sdk";
+import { env } from 'node:process';
+import { Buffer } from 'node:buffer';
 
 import "dotenv/config";
 
@@ -37,12 +39,12 @@ async function getSpotifyAccessToken() {
       method: "POST",
       headers: {
         Authorization: `Basic ${Buffer.from(
-          `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+          `${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`
         ).toString("base64")}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
       // TODO: querystring-ify
-      body: `grant_type=refresh_token&refresh_token=${process.env.SPOTIFY_REFRESH_TOKEN}&redirect_uri=${process.env.SPOTIFY_CALLBACK_URI}`,
+      body: `grant_type=refresh_token&refresh_token=${env.SPOTIFY_REFRESH_TOKEN}&redirect_uri=${env.SPOTIFY_CALLBACK_URI}`,
     });
     return await response.json();
   } catch (error) {
@@ -124,7 +126,7 @@ async function getBooks() {
       document,
       requestHeaders: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.HARDCOVER_API_TOKEN}`,
+        Authorization: `Bearer ${env.HARDCOVER_API_TOKEN}`,
       },
     });
 
@@ -159,10 +161,10 @@ async function getFitness() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        client_id: process.env.STRAVA_CLIENT_ID,
-        client_secret: process.env.STRAVA_CLIENT_SECRET,
+        client_id:env.STRAVA_CLIENT_ID,
+        client_secret:env.STRAVA_CLIENT_SECRET,
         grant_type: "refresh_token",
-        refresh_token: process.env.STRAVA_REFRESH_TOKEN,
+        refresh_token:env.STRAVA_REFRESH_TOKEN,
       }),
     });
     const { access_token } = await responseToken.json();
@@ -228,12 +230,12 @@ async function getLinks() {
     // Probs just replicate its behaviour ourselves with more modern implementation.
     // https://github.com/bryantchan/instapaper-node-sdk/blob/master/index.js
     const client = new Instapaper(
-      process.env.INSTAPAPER_CONSUMER_ID,
-      process.env.INSTAPAPER_CONSUMER_SECRET
+      env.INSTAPAPER_CONSUMER_ID,
+      env.INSTAPAPER_CONSUMER_SECRET
     );
     client.setCredentials(
-      process.env.INSTAPAPER_USERNAME,
-      process.env.INSTAPAPER_PASSWORD
+      env.INSTAPAPER_USERNAME,
+      env.INSTAPAPER_PASSWORD
     );
     const list = await client.list({ limit: 10 });
 
@@ -264,7 +266,7 @@ function addAlbum(album, albums) {
 }
 
 async function writeDataFile(key, content) {
-  const dataDir = "./app/data/";
+  const dataDir = "./data/";
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir);
   }
