@@ -333,12 +333,7 @@ export default function Index() {
             <h2>Recent links</h2>
             <ol className="flow list-none md:columns-2">
               {readingList.slice(0, 6).map((link) => {
-                let hostname;
-                try {
-                  hostname = new URL(link.url).hostname;
-                } catch (e) {
-                  return null;
-                }
+                const hostname = new URL(link.url).hostname;
                 return (
                   <li className="inline inline--gap-sm relative" key={link.id}>
                     <div>

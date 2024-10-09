@@ -9,5 +9,5 @@ node_modules
 .netlify
 .DS_Store
 
-./data/*
-!./data/newsletters.json
+/data/*
+!/data/newsletters.json
