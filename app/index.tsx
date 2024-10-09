@@ -3,7 +3,7 @@ import books from "~/data/books.json";
 import fitness from "~/data/fitness.json";
 import gigs from "~/data/gigs.json";
 import newsletters from "~/data/newsletters.json";
-import readingList from "~/data/books.json";
+import readingList from "~/data/links.json";
 
 export const meta = () => {
   const title = "Adam Duncan — Software Engineer, London, UK";
