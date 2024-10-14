@@ -1,5 +1,3 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-
 import albums from "~/data/albums.json";
 import books from "~/data/books.json";
 import fitness from "~/data/fitness.json";
@@ -7,59 +5,31 @@ import gigs from "~/data/gigs.json";
 import newsletters from "~/data/newsletters.json";
 import readingList from "~/data/links.json";
 
-export const meta: MetaFunction = () => {
+const Meta = () => {
   const title = "Adam Duncan — Software Engineer, London, UK";
-  const description = `I’m a front-end developer with ${Math.floor(
+  const description = `I'm a front-end developer with ${Math.floor(
     new Date().getFullYear() - 2008
-  )} years’ experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`;
+  )} years' experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`;
   const image = "https://www.adamduncandesigns.com/icon-512.png";
 
-  return [
-    { title },
-    {
-      name: "description",
-      content: description,
-    },
-    {
-      property: "og:title",
-      content: title,
-    },
-    {
-      property: "og:description",
-      content: description,
-    },
-    {
-      property: "og:image",
-      content: image,
-    },
-    {
-      property: "og:url",
-      content: "https://www.adamduncandesigns.com/",
-    },
-    {
-      property: "og:type",
-      content: "profile",
-    },
-    {
-      name: "twitter:card",
-      content: "summary",
-    },
-    {
-      name: "twitter:site",
-      content: "@duncanadam",
-    },
-    {
-      name: "twitter:creator",
-      content: "@duncanadam",
-    },
-    {
-      name: "twitter:image",
-      content: image,
-    },
-  ];
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content="https://www.adamduncandesigns.com/" />
+      <meta property="og:type" content="profile" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="@duncanadam" />
+      <meta name="twitter:creator" content="@duncanadam" />
+      <meta name="twitter:image" content={image} />
+    </>
+  );
 };
 
-export const links: LinksFunction = () => {
+export const links = () => {
   return [
     { rel: "manifest", href: "/manifest.webmanifest" },
     {
@@ -98,6 +68,7 @@ export default function Index() {
 
   return (
     <>
+      <Meta />
       <header className="flow card">
         <h1>Adam Duncan</h1>
         <p className="text-large">
@@ -559,11 +530,10 @@ export default function Index() {
           <p>
             Text is set in <em>National 2</em>, from the choice{" "}
             <a href="https://klim.co.nz/">Klim Type Foundry</a>. This site is
-            (unnecessarily) built with <a href="https://remix.run/">Remix</a>{" "}
-            and automatically deployed to{" "}
-            <a href="https://www.netlify.com/">Netlify</a>. Life data pulled in
-            from Spotify, Hardcover, Instapaper, GitHub, Strava, and Website
-            Carbon Calculator.
+            built with <a href="https://onestack.dev/">One</a> and automatically
+            deployed to <a href="https://www.netlify.com/">Netlify</a>. Life
+            data pulled in from Spotify, Hardcover, Instapaper, GitHub, Strava,
+            and Website Carbon Calculator.
             {/* TODO: TBD */}
             {/* It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">

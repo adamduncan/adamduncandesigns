@@ -4,10 +4,11 @@ node_modules
 /public/build
 /build
 .env
+dist
 
 # Local Netlify folder
 .netlify
 .DS_Store
 
-/app/data/*
-!/app/data/newsletters.json
+/data/*
+!/data/newsletters.json
