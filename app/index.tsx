@@ -14,10 +14,28 @@ const Meta = () => {
 
   return (
     <>
-      <meta charset="utf-8" />
+      <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width,initial-scale=1" />
       <title>{title}</title>
       <meta name="description" content={description} />
+      <link rel="manifest" href="/manifest.webmanifest" />
+      <link rel="icon" href="/favicon.ico" sizes="32x32" />
+      <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <link
+        rel="preload"
+        as="font"
+        crossOrigin="anonymous"
+        href="/fonts/national-2-condensed-medium.woff2"
+        type="font/woff2"
+      />
+      <link
+        rel="preload"
+        as="font"
+        crossOrigin="anonymous"
+        href="/fonts/national-2-regular.woff2"
+        type="font/woff2"
+      />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
@@ -29,40 +47,6 @@ const Meta = () => {
       <meta name="twitter:image" content={image} />
     </>
   );
-};
-
-export const links = () => {
-  return [
-    { rel: "manifest", href: "/manifest.webmanifest" },
-    {
-      rel: "icon",
-      href: "/favicon.ico",
-      sizes: "32x32",
-    },
-    {
-      rel: "icon",
-      href: "/icon.svg",
-      type: "image/svg+xml",
-    },
-    {
-      rel: "apple-touch-icon",
-      href: "/apple-touch-icon.png",
-    },
-    {
-      rel: "preload",
-      as: "font",
-      crossOrigin: "anonymous",
-      href: "/fonts/national-2-condensed-medium.woff2",
-      type: "font/woff2",
-    },
-    {
-      rel: "preload",
-      as: "font",
-      crossOrigin: "anonymous",
-      href: "/fonts/national-2-regular.woff2",
-      type: "font/woff2",
-    },
-  ];
 };
 
 export default function Index() {
