@@ -530,11 +530,10 @@ export default function Index() {
           <p>
             Text is set in <em>National 2</em>, from the choice{" "}
             <a href="https://klim.co.nz/">Klim Type Foundry</a>. This site is
-            (unnecessarily) built with <a href="https://remix.run/">Remix</a>{" "}
-            and automatically deployed to{" "}
-            <a href="https://www.netlify.com/">Netlify</a>. Life data pulled in
-            from Spotify, Hardcover, Instapaper, GitHub, Strava, and Website
-            Carbon Calculator.
+            built with <a href="https://onestack.dev/">One</a> and automatically
+            deployed to <a href="https://www.netlify.com/">Netlify</a>. Life
+            data pulled in from Spotify, Hardcover, Instapaper, GitHub, Strava,
+            and Website Carbon Calculator.
             {/* TODO: TBD */}
             {/* It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">
