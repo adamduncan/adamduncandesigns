@@ -71,7 +71,7 @@ export default function Index() {
         >
           <h2>Hey</h2>
           <p className="max-w-prose">
-            I’m a front-end developer with {Math.floor(currentYear - 2008)}{" "}
+            I’m a front-end developer with {Math.floor(currentYear - 2009)}{" "}
             years’ experience, keen to work on a wide range of projects, and
             deepen my understanding of modern web technologies. I’m passionate
             about design and technology, and excited to be part of an industry
@@ -215,12 +215,12 @@ export default function Index() {
         </section>
 
         <section className="flow card bg-prominent" id="social">
-          <h2>“Social”</h2>
+          <h2>Social</h2>
           <ul className="flow flow--gap-sm list-none">
             <li>
               <a
                 className="inline inline--gap-xs"
-                href="https://x.com/duncanadam"
+                href="https://bsky.app/profile/adamduncandesigns.com"
               >
                 <svg
                   aria-hidden="true"
@@ -229,14 +229,14 @@ export default function Index() {
                   width="24"
                   height="24"
                   fill="none"
-                  viewBox="0 0 1200 1227"
+                  viewBox="0 0 600 530"
                 >
                   <path
                     fill="var(--color-text)"
-                    d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"
+                    d="M135.72 44.03C202.216 93.951 273.74 195.17 300 249.49c26.262-54.316 97.782-155.54 164.28-205.46C512.26 8.009 590-19.862 590 68.825c0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.38-3.69-10.832-3.708-7.896-.017-2.936-1.193.516-3.707 7.896-13.714 40.255-67.233 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.45-163.25-81.433C20.15 217.613 9.997 86.535 9.997 68.825c0-88.687 77.742-60.816 125.72-24.795z"
                   />
                 </svg>
-                @duncanadam
+                Bluesky
               </a>
             </li>
             <li>
@@ -500,7 +500,7 @@ export default function Index() {
             </li>
             {/* TODO: Fetch from GitHub */}
             <li>
-              Starred 515 projects on GitHub. Just think of the{" "}
+              Starred 530 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.
             </li>
             <li>
