@@ -298,7 +298,7 @@ export default function Index() {
                     <div>
                       <img
                         className="aspect-square size-md"
-                        src={`https://icon.horse/icon/${hostname}`}
+                        src={`https://icons.duckduckgo.com/ip9/${hostname}.ico`}
                         alt=""
                         height={24}
                         loading="lazy"
@@ -380,14 +380,16 @@ export default function Index() {
               {albums.slice(0, 5).map((album) => {
                 return (
                   <li className="inline relative" key={album.id}>
-                    <img
-                      className="aspect-square bg mbs-2xs width-3xl"
-                      src={album.image.url}
-                      alt={album.name}
-                      height={album.image.width}
-                      loading="lazy"
-                      width={96}
-                    />
+                    <div>
+                      <img
+                        className="aspect-square bg mbs-2xs width-3xl"
+                        src={album.image.url}
+                        alt={album.name}
+                        height={96}
+                        loading="lazy"
+                        width={96}
+                      />
+                    </div>
                     <div>
                       <div>
                         <a className="link-cover" href={album.url}>
@@ -440,6 +442,7 @@ export default function Index() {
             {newsletters
               .sort((a, b) => a.title.localeCompare(b.title))
               .map((newsletter) => {
+                const hostname = new URL(newsletter.url).hostname;
                 return (
                   <li
                     className="inline inline--gap-sm relative"
@@ -448,7 +451,7 @@ export default function Index() {
                     <div>
                       <img
                         className="aspect-square size-md"
-                        src={`https://icon.horse/icon/?uri=${newsletter.url}`}
+                        src={`https://icons.duckduckgo.com/ip9/${hostname}.ico`}
                         alt=""
                         height={24}
                         loading="lazy"
