@@ -488,13 +488,13 @@ export default function Index() {
           <h2>Stats</h2>
           <ul className="flow flow--gap-sm list-none">
             {/* TODO: Fetch from Website Carbon API */}
-            <li>
+            {/* <li>
               This page achieves a carbon{" "}
               <a href="https://www.websitecarbon.com/website/adamduncandesigns-com/">
                 rating of B
               </a>
               , cleaner than 80% of all web pages globally.
-            </li>
+            </li> */}
             <li>
               {(fitness.ytd_run_distance / 1000).toFixed(2)}km run so far this
               year. That’s{" "}
