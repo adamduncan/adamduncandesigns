@@ -495,15 +495,17 @@ export default function Index() {
               </a>
               , cleaner than 80% of all web pages globally.
             </li> */}
-            <li>
-              {(fitness.ytd_run_distance / 1000).toFixed(2)}km run so far this
-              year. That’s{" "}
-              {((fitness.ytd_run_distance / 40_075_000) * 100).toFixed(2)}%
-              around the world.
-            </li>
+            {fitness.ytd_run_distance ? (
+              <li>
+                {(fitness.ytd_run_distance / 1000).toFixed(2)}km run so far this
+                year. That’s{" "}
+                {((fitness.ytd_run_distance / 40_075_000) * 100).toFixed(2)}%
+                around the world.
+              </li>
+            ) : null}
             {/* TODO: Fetch from GitHub */}
             <li>
-              Starred 530 projects on GitHub. Just think of the{" "}
+              Starred 534 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.
             </li>
             <li>
