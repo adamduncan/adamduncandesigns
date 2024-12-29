@@ -169,8 +169,6 @@ async function getFitness() {
     });
     const { access_token } = await responseToken.json();
 
-    console.log({ access_token });
-
     const responseStats = await fetch(
       "https://www.strava.com/api/v3/athletes/109281469/stats",
       {
@@ -180,8 +178,6 @@ async function getFitness() {
       }
     );
     const data = await responseStats.json();
-
-    console.log(data);
 
     return {
       ytd_run_distance: data.ytd_run_totals.distance,
