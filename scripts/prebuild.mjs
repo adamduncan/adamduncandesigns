@@ -4,8 +4,8 @@ import fs from "node:fs";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { gql, request } from "graphql-request";
 import Instapaper from "instapaper-node-sdk";
-import { env } from 'node:process';
-import { Buffer } from 'node:buffer';
+import { env } from "node:process";
+import { Buffer } from "node:buffer";
 
 import "dotenv/config";
 
@@ -161,13 +161,15 @@ async function getFitness() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        client_id:env.STRAVA_CLIENT_ID,
-        client_secret:env.STRAVA_CLIENT_SECRET,
+        client_id: env.STRAVA_CLIENT_ID,
+        client_secret: env.STRAVA_CLIENT_SECRET,
         grant_type: "refresh_token",
-        refresh_token:env.STRAVA_REFRESH_TOKEN,
+        refresh_token: env.STRAVA_REFRESH_TOKEN,
       }),
     });
     const { access_token } = await responseToken.json();
+
+    console.log({ access_token });
 
     const responseStats = await fetch(
       "https://www.strava.com/api/v3/athletes/109281469/stats",
@@ -178,6 +180,8 @@ async function getFitness() {
       }
     );
     const data = await responseStats.json();
+
+    console.log(data);
 
     return {
       ytd_run_distance: data.ytd_run_totals.distance,
@@ -233,10 +237,7 @@ async function getLinks() {
       env.INSTAPAPER_CONSUMER_ID,
       env.INSTAPAPER_CONSUMER_SECRET
     );
-    client.setCredentials(
-      env.INSTAPAPER_USERNAME,
-      env.INSTAPAPER_PASSWORD
-    );
+    client.setCredentials(env.INSTAPAPER_USERNAME, env.INSTAPAPER_PASSWORD);
     const list = await client.list({ limit: 10 });
 
     return list

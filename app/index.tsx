@@ -197,8 +197,10 @@ export default function Index() {
               daily game for music buffs.
             </li>
             <li>
-              <a href="https://x.com/FrontEndReads">@FrontEndReads</a> &mdash;
-              Links on front-end development and design.
+              <a href="https://bsky.app/profile/frontendreads.bsky.social">
+                @FrontEndReads
+              </a>{" "}
+              &mdash; Links on front-end development and design.
             </li>
             <li>
               <a href="https://github.com/adamduncan/eleventy-plugin-i18n">
@@ -318,7 +320,7 @@ export default function Index() {
             <p>
               <a
                 className="inline inline--gap-xs items-baseline"
-                href="https://x.com/FrontEndReads"
+                href="https://bsky.app/profile/frontendreads.bsky.social"
               >
                 View more @FrontEndReads
                 <svg
@@ -512,7 +514,7 @@ export default function Index() {
               Estimated stay in London: 2 years. Actual: {currentYear - 2010}{" "}
               years and counting (sorry, Mum).
             </li>
-            <li>Longest word on Spelling Bee: Annihilation.</li>
+            <li>Longest word on Spelling Bee: Inconvenience.</li>
           </ul>
         </section>
 
