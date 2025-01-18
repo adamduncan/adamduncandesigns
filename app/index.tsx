@@ -490,13 +490,15 @@ export default function Index() {
           <h2>Stats</h2>
           <ul className="flow flow--gap-sm list-none">
             {/* TODO: Fetch from Website Carbon API */}
-            {/* <li>
+            <li>
               This page achieves a carbon{" "}
               <a href="https://www.websitecarbon.com/website/adamduncandesigns-com/">
                 rating of B
               </a>
-              , cleaner than 80% of all web pages globally.
-            </li> */}
+              , cleaner than 76% of all web pages globally.
+            </li>
+            {/* TBD: Strava API broken at the moment */}
+            {/* https://communityhub.strava.com/developers-api-7/athlete-v3-stats-api-all-run-totals-and-others-are-incorrect-7826 */}
             {fitness.ytd_run_distance ? (
               <li>
                 {(fitness.ytd_run_distance / 1000).toFixed(2)}km run so far this
@@ -507,7 +509,7 @@ export default function Index() {
             ) : null}
             {/* TODO: Fetch from GitHub */}
             <li>
-              Starred 534 projects on GitHub. Just think of the{" "}
+              Starred 539 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.
             </li>
             <li>
@@ -525,14 +527,13 @@ export default function Index() {
             <a href="https://klim.co.nz/">Klim Type Foundry</a>. This site is
             built with <a href="https://onestack.dev/">One</a> and automatically
             deployed to <a href="https://www.netlify.com/">Netlify</a>. Life
-            data pulled in from Spotify, Hardcover, Instapaper, GitHub, Strava,
-            and Website Carbon Calculator.
-            {/* TODO: TBD */}
-            {/* It ain’t pretty, but the{" "}
+            data pulled in from Spotify, Hardcover, Instapaper, GitHub,{" "}
+            {fitness.ytd_run_distance ? "Strava," : ""}
+            and Website Carbon Calculator. It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">
               source code for this site
             </a>{" "}
-            is available on GitHub. */}
+            is available on GitHub.
           </p>
         </section>
       </main>
