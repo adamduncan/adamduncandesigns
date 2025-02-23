@@ -509,7 +509,7 @@ export default function Index() {
             ) : null}
             {/* TODO: Fetch from GitHub */}
             <li>
-              Starred 539 projects on GitHub. Just think of the{" "}
+              Starred 548 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.
             </li>
             <li>
