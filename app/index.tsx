@@ -7,7 +7,7 @@ import readingList from "~/data/links.json";
 
 const Meta = () => {
   const title = "Adam Duncan — Software Engineer, London, UK";
-  const description = `I'm a front-end developer with ${Math.floor(
+  const description = `I'm a front-end engineer with ${Math.floor(
     new Date().getFullYear() - 2008
   )} years' experience, keen to work on a wide range of projects, and deepen my understanding of modern web technologies.`;
   const image = "https://www.adamduncandesigns.com/icon-512.png";
@@ -71,7 +71,7 @@ export default function Index() {
         >
           <h2>Hey</h2>
           <p className="max-w-prose">
-            I’m a front-end developer with {Math.floor(currentYear - 2009)}{" "}
+            I’m a front-end engineer with {Math.floor(currentYear - 2009)}{" "}
             years’ experience, keen to work on a wide range of projects, and
             deepen my understanding of modern web technologies. I’m passionate
             about design and technology, and excited to be part of an industry
@@ -528,7 +528,7 @@ export default function Index() {
             built with <a href="https://onestack.dev/">One</a> and automatically
             deployed to <a href="https://www.netlify.com/">Netlify</a>. Life
             data pulled in from Spotify, Hardcover, Instapaper, GitHub,{" "}
-            {fitness.ytd_run_distance ? "Strava," : ""}
+            {fitness.ytd_run_distance ? "Strava, " : ""}
             and Website Carbon Calculator. It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">
               source code for this site
