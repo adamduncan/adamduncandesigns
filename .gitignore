@@ -11,4 +11,7 @@ dist
 .DS_Store
 
 /data/*
+!/data/albums-fallback.json
+!/data/fitness-fallback.json
+!/data/gigs-fallback.json
 !/data/newsletters.json

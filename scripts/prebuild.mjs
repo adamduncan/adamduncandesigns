@@ -84,8 +84,8 @@ async function getAlbums(sdk) {
 
     return Object.values(Object.fromEntries(albums)).slice(0, 5);
   } catch (error) {
-    console.log("Could not fetch albums");
-    console.log(error);
+    console.log("Could not fetch albums, using fallback");
+    return JSON.parse(fs.readFileSync("./data/albums-fallback.json", "utf-8"));
   }
 }
 
@@ -183,8 +183,8 @@ async function getFitness() {
       ytd_run_distance: data.ytd_run_totals.distance,
     };
   } catch (error) {
-    console.log("Could not fetch fitness data");
-    console.log(error);
+    console.log("Could not fetch fitness data, using fallback");
+    return JSON.parse(fs.readFileSync("./data/fitness-fallback.json", "utf-8"));
   }
 }
 
@@ -219,8 +219,8 @@ async function getGigs(sdk) {
       });
     return gigs;
   } catch (error) {
-    console.log("Could not fetch gigs");
-    console.log(error);
+    console.log("Could not fetch gigs, using fallback");
+    return JSON.parse(fs.readFileSync("./data/gigs-fallback.json", "utf-8"));
   }
 }
 
