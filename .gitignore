@@ -12,6 +12,8 @@ dist
 
 /data/*
 !/data/albums-fallback.json
+!/data/books-fallback.json
 !/data/fitness-fallback.json
 !/data/gigs-fallback.json
+!/data/links-fallback.json
 !/data/newsletters.json

@@ -148,8 +148,9 @@ async function getBooks() {
 
     return books;
   } catch (error) {
-    console.log("Could not fetch books");
+    console.log("Could not fetch books, using fallback");
     console.log(error);
+    return JSON.parse(fs.readFileSync("./data/books-fallback.json", "utf-8"));
   }
 }
 
@@ -247,8 +248,9 @@ async function getLinks() {
         };
       });
   } catch (error) {
-    console.log("Could not fetch reading list");
+    console.log("Could not fetch reading list, using fallback");
     console.log(error);
+    return JSON.parse(fs.readFileSync("./data/links-fallback.json", "utf-8"));
   }
 }
 
