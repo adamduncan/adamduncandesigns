@@ -509,7 +509,7 @@ export default function Index() {
             ) : null}
             {/* TODO: Fetch from GitHub */}
             <li>
-              Starred 548 projects on GitHub. Just think of the{" "}
+              Starred 577 projects on GitHub. Just think of the{" "}
               <code>node_modules</code>.
             </li>
             <li>
@@ -527,7 +527,7 @@ export default function Index() {
             <a href="https://klim.co.nz/">Klim Type Foundry</a>. This site is
             built with <a href="https://onestack.dev/">One</a> and automatically
             deployed to <a href="https://www.netlify.com/">Netlify</a>. Life
-            data pulled in from Spotify, Hardcover, Instapaper, GitHub,{" "}
+            data pulled in from Qobuz, Hardcover, Instapaper, GitHub,{" "}
             {fitness.ytd_run_distance ? "Strava, " : ""}
             and Website Carbon Calculator. It ain’t pretty, but the{" "}
             <a href="https://github.com/adamduncan/adamduncandesigns">

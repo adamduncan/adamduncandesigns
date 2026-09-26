@@ -16,7 +16,7 @@ async function prebuild() {
     const spotifySdk = SpotifyApi.withAccessToken("client-id", spotifyToken);
 
     const [albums, books, fitness, gigs, links] = await Promise.all([
-      getAlbums(spotifySdk),
+      getAlbums(),
       getBooks(),
       getFitness(),
       getGigs(spotifySdk),
@@ -52,40 +52,68 @@ async function getSpotifyAccessToken() {
   }
 }
 
-async function getAlbums(sdk) {
+async function getAlbums() {
   try {
-    const [recentlyPlayedTracks, topItems] = await Promise.all([
-      sdk.player.getRecentlyPlayedTracks(50),
-      sdk.currentUser.topItems("tracks", "short_term", 50),
+    const lastFm = async (method, params) => {
+      const response = await fetch(
+        `https://ws.audioscrobbler.com/2.0/?${new URLSearchParams({
+          method,
+          user: env.LASTFM_USERNAME,
+          api_key: env.LASTFM_API_KEY,
+          format: "json",
+          ...params,
+        })}`,
+      );
+      const data = await response.json();
+      if (data.error) throw new Error(data.message);
+      return data;
+    };
+
+    const [recentTracks, topAlbums] = await Promise.all([
+      lastFm("user.getrecenttracks", { limit: 50 }),
+      lastFm("user.gettopalbums", { period: "1month", limit: 20 }),
     ]);
 
     const albums = new Map();
+    const minPlays = 3;
+    // Last.fm returns a single object rather than an array when there's only one result.
+    const asArray = (items = []) => [].concat(items);
 
-    // TODO: Rethink/refactor this messiness.
-    // Basically want to treat any recently played tracks (not on shuffle, if possible) as recent listens ahead of "top" albums.
-    for (let i = 0; i < recentlyPlayedTracks.items.length; i++) {
-      const { track } = recentlyPlayedTracks.items[i];
-      const { album } = track;
-      const albumListenCount = recentlyPlayedTracks.items.filter(
-        (item) => item.track.album.id === album.id
+    // Treat albums with a few recent plays as recent listens, ahead of "top" albums.
+    const recentAlbums = asArray(recentTracks.recenttracks.track).map(
+      (track) => ({
+        artist: track.artist["#text"],
+        image: track.image,
+        name: track.album["#text"],
+      }),
+    );
+    for (const album of recentAlbums) {
+      const albumListenCount = recentAlbums.filter(
+        ({ artist, name }) => artist === album.artist && name === album.name,
       ).length;
 
-      if (!albums.has(album.id) && albumListenCount > 2) {
+      if (albumListenCount >= minPlays) {
         addAlbum(album, albums);
       }
     }
 
-    for (const item of topItems.items) {
-      const { album } = item;
-      if (!albums.has(album.id)) {
-        addAlbum(album, albums);
-      }
+    for (const album of asArray(topAlbums.topalbums.album)) {
+      if (Number(album.playcount) < minPlays) continue;
+      addAlbum(
+        { artist: album.artist.name, image: album.image, name: album.name },
+        albums,
+      );
     }
 
-    return Object.values(Object.fromEntries(albums)).slice(0, 5);
+    // Top up with fallback albums if Last.fm doesn't have enough.
+    const key = ({ artist, name }) => `${artist}|${name}`.toLowerCase();
+    const seen = new Set([...albums.values()].map(key));
+    const fallback = albumsFallback().filter((album) => !seen.has(key(album)));
+
+    return [...albums.values(), ...fallback].slice(0, 5);
   } catch (error) {
     console.log("Could not fetch albums, using fallback");
-    return JSON.parse(fs.readFileSync("./data/albums-fallback.json", "utf-8"));
+    return albumsFallback();
   }
 }
 
@@ -254,13 +282,27 @@ async function getLinks() {
   }
 }
 
-function addAlbum(album, albums) {
-  albums.set(album.id, {
-    artist: album.artists[0].name,
-    image: album.images[0],
-    id: album.id,
-    name: album.name.split("(")[0].trim(),
-    url: album.external_urls.spotify,
+function albumsFallback() {
+  return JSON.parse(fs.readFileSync("./data/albums-fallback.json", "utf-8"));
+}
+
+function addAlbum({ artist, image, name }, albums) {
+  const url = `https://www.last.fm/music/${encodeURIComponent(
+    artist,
+  )}/${encodeURIComponent(name)}`;
+  const imageUrl = image.at(-1)?.["#text"];
+
+  // Last.fm serves a grey star placeholder when it has no artwork.
+  const isPlaceholder = imageUrl?.includes("2a96cbd8b46e442fc41c2b86b821562f");
+
+  if (!name || !imageUrl || isPlaceholder || albums.has(url)) return;
+
+  albums.set(url, {
+    artist,
+    image: { url: imageUrl, height: 300, width: 300 },
+    id: url,
+    name: name.split("(")[0].trim(),
+    url,
   });
 }
 
